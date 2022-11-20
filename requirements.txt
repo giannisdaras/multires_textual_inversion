@@ -1,0 +1,9 @@
+python-jose[cryptography]
+diffusers[torch]
+transformers 
+scipy 
+ftfy
+gdown
+diffusers[training]
+accelerate
+
