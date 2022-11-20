@@ -1,0 +1,2 @@
+# multires_textual_inversion
+Multiresolution Textual Inversion
