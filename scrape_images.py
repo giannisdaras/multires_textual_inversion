@@ -14,7 +14,7 @@ models_list = api.list_models(author="sd-concepts-library", sort="likes", direct
 
 for model in tqdm(models_list):
   model_id = model.modelId
-  model_dir = os.path.join("datasets", model_id)
+  model_dir = os.path.join("datasets", model_id.replace("sd-concepts-library/", ""))
   os.makedirs(model_dir, exist_ok = True)
 
   for i in range(MAX_IMAGES):
