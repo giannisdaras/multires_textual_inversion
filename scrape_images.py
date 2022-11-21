@@ -7,7 +7,7 @@ import os
 if not os.path.exists("datasets/"):
     os.makedirs("datasets/")
 
-TOP_K = 100
+TOP_K = 5
 MAX_IMAGES = 4
 api = HfApi()
 models_list = api.list_models(author="sd-concepts-library", sort="likes", direction=-1)[:TOP_K]
