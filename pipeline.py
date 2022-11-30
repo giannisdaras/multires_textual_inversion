@@ -424,6 +424,16 @@ class DreamBoothMultiResPipeline(MultiResPipeline):
             list of `bool`s denoting whether the corresponding generated image likely represents "not-safe-for-work"
             (nsfw) content, according to the `safety_checker`.
         """
+
+        # make sure that tokenizer knows about the special tokens.
+        tokenizer = self.tokenizer
+        # Add the placeholder token in tokenizer
+        for scale_index in range(num_scales):
+            placeholder_string = f"<{instance_prompt}|{scale_index}|>"
+            increment = tokenizer.add_special_tokens({"additional_special_tokens": [placeholder_string]})
+
+
+
         if isinstance(prompt, str):
             batch_size = 1
         elif isinstance(prompt, list):
