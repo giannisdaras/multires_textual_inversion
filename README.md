@@ -90,8 +90,8 @@ images = pipe(prompts, string_to_param_dict, seed=42)
 ```
 
 #### Fixed Resolution Sampling
-
 ![](./images/fixed.png)
+
 To run the Fixed Resolution sampler, use the format: `<jane|number|>` to refer to the object at your prompt. For all the trained models, the number should be an integer in \[0, 9\], i.e. we learned a set of $10$ embeddings to describe the object (instead of one, as in Textual Inversion).
 
 Example:
