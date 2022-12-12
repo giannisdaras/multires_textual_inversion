@@ -185,7 +185,7 @@ If you find this work useful, please consider citing the following papers:
 
 ```
 @misc{daras2022multires,
-      url = {TBD},
+      url = {https://arxiv.org/abs/2211.17115},
       author = {Giannis Daras and Alexandros G. Dimakis},
       title = {Multiresolution Textual Inversion},
       publisher = {arXiv},
