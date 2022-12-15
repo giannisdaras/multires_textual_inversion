@@ -115,7 +115,6 @@ Once you have trained (or downloaded) the learned concepts, you can create image
 ```
 from pipeline import DreamBoothMultiResPipeline
 import torch
-model_id = "runwayml/stable-diffusion-v1-5"
 pipe = DreamBoothMultiResPipeline.from_pretrained("dreambooth_outputs/multires_800/stan-smith", use_auth_token=True)
 pipe = pipe.to("cuda")
 image = pipe("An image of a <S(0)>")[0]
