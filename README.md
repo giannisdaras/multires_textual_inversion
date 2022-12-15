@@ -118,7 +118,7 @@ import torch
 model_id = "runwayml/stable-diffusion-v1-5"
 pipe = DreamBoothMultiResPipeline.from_pretrained("dreambooth_outputs/multires_800/stan-smith", use_auth_token=True)
 pipe = pipe.to("cuda")
-image = pipe("An image of a <S(0)>", string_to_param_dict)[0]
+image = pipe("An image of a <S(0)>")[0]
 loc = f"out_image.png"
 image.save(loc)
 ```
