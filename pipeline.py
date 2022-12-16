@@ -428,11 +428,11 @@ class DreamBoothMultiResPipeline(MultiResPipeline):
         # make sure that tokenizer knows about the special tokens.
         tokenizer = self.tokenizer
         # Add the placeholder token in tokenizer
+        new_tokens = []
         for scale_index in range(num_scales):
             placeholder_string = f"<{instance_prompt}|{scale_index}|>"
-            increment = tokenizer.add_special_tokens({"additional_special_tokens": [placeholder_string]})
-
-
+            new_tokens.append(placeholder_string)
+        increment = tokenizer.add_special_tokens({"additional_special_tokens": new_tokens})
 
         if isinstance(prompt, str):
             batch_size = 1
@@ -503,7 +503,8 @@ class DreamBoothMultiResPipeline(MultiResPipeline):
             normalized_time = t / self.scheduler.num_train_timesteps
 
             # semi resolution-dependent sampling
-            matches = find_all(r"<S\(\d+\)>", prompt)
+            prompt_s = f"<{instance_prompt}\(\d+\)>"
+            matches = find_all(r""+prompt_s, prompt)
             new_prompt = copy.deepcopy(prompt)
             for match in matches:
 
@@ -511,21 +512,22 @@ class DreamBoothMultiResPipeline(MultiResPipeline):
                 number = int(re.search(r"\d+", match.group(0)).group(0))
                 if number / num_scales <= normalized_time:
                     new_number = int(normalized_time * num_scales)
-                    new_prompt = new_prompt.replace(match.group(0), f"<S|{new_number}|>")
+                    new_prompt = new_prompt.replace(match.group(0), f"<{instance_prompt}|{new_number}|>")
                 else:
                     new_prompt = new_prompt.replace(match.group(0), "")
 
             # fully resolution-dependent sampling
-            matches = find_all(r"<S\[\d+\]>", prompt)
+            prompt_s = f"<{instance_prompt}\[\d+\]>"
+            matches = find_all(r""+prompt_s, prompt)
             for match in matches:
 
                 # extract digits
                 number = int(re.search(r"\d+", match.group(0)).group(0))
                 if number / num_scales <= normalized_time:
                     new_number = int(normalized_time * num_scales)
-                    new_prompt = new_prompt.replace(match.group(0), f"<S|{new_number}|>")
+                    new_prompt = new_prompt.replace(match.group(0), f"<{instance_prompt}|{new_number}|>")
                 else:
-                    new_prompt = new_prompt.replace(match.group(0), f"<S|{number}|>")
+                    new_prompt = new_prompt.replace(match.group(0), f"<{instance_prompt}|{number}|>")
             
             print(new_prompt)
 
@@ -591,7 +593,6 @@ class DreamBoothMultiResPipeline(MultiResPipeline):
             return (image, has_nsfw_concept)
 
         return image
-
 
 
 
