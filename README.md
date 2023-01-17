@@ -209,3 +209,10 @@ If you find this work useful, please consider citing the following papers:
 ## Acknowledgements
 
 This repository is based on the [diffusers](https://github.com/huggingface/diffusers) library. 
+
+
+## Anotation
+
+python3 -m prodigy dreambooth_comp test_dataset DREAMBOOTH -F select_best.py
+python3 -m prodigy db-out test_dataset > ./annotations.jsonl
+python3 -m prodigy drop test_dataset
