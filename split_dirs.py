@@ -10,8 +10,8 @@ parser.add_argument('--path_to_imgs', metavar='DIR', nargs='?', default='dataset
 parser.add_argument('--destination_path', metavar='DIR', nargs='?', default='datasets/augmented_dogs_splitted/',
                     help='path to save augmented dataset')
 parser.add_argument("--seed", default=42, type=int, help="Seed for random split")
-parser.add_argument("--ratios", default=(.2, .05, 0.75), type=tuple, help="Ratios for split (train, eval, test)")
-parser.add_argument("--fixed", default=(500, 500, 499), type=tuple, help="How many images to keep.")
+parser.add_argument("--ratios", default=(.8, .1, 0.1), type=tuple, help="Ratios for split (train, eval, test)")
+parser.add_argument("--fixed_number", default=500, type=int, help="Number of images to keep")
 
 
 if __name__ == '__main__':
@@ -22,23 +22,12 @@ if __name__ == '__main__':
         print("Removing destination path...")
         shutil.rmtree(args.destination_path)
 
-    if args.fixed:
-        print("Splitting based on fixed numbers...")
-        splitfolders.fixed(
-            args.path_to_imgs, # The location of dataset
-            output=args.destination_path, # The output location
-            seed=args.seed, # The number of seed
-            fixed=args.fixed,
-            group_prefix=None, # If your dataset contains more than one file like ".jpg", ".pdf", etc
-            move=False # If you choose to move, turn this into True
-        )
-    else:
-        print("Splitting based on ratios...")    
-        splitfolders.ratio(
-            args.path_to_imgs, # The location of dataset
-            output=args.destination_path, # The output location
-            seed=args.seed, # The number of seed
-            ratio=args.ratios, # The ratio of splited dataset
-            group_prefix=None, # If your dataset contains more than one file like ".jpg", ".pdf", etc
-            move=False # If you choose to move, turn this into True
-        )
+    print("Splitting based on fixed numbers...")
+    splitfolders.fixed(
+        args.path_to_imgs, # The location of dataset
+        output=args.destination_path, # The output location
+        seed=args.seed, # The number of seed
+        fixed=[int(x) for x in (args.fixed_number * args.ratios[0], args.fixed_number * args.ratios[1], args.fixed_number * args.ratios[2])],
+        group_prefix=None, # If your dataset contains more than one file like ".jpg", ".pdf", etc
+        move=False # If you choose to move, turn this into True
+    )
