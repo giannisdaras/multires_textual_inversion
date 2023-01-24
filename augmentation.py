@@ -2,9 +2,12 @@ import os
 import random
 
 
+path_to_imgs = ""
+destination_path = ""
+
 t = transforms.ToPILImage()
 
-dataset = datasets.ImageFolder(f'/content/drive/MyDrive/test_dreambooth_synth/num_scales_10/200/dreambooth_new_prompts_dogs/', transform=transforms.ToTensor())
+dataset = datasets.ImageFolder(path_to_imgs, transform=transforms.ToTensor())
 loader = torch.utils.data.DataLoader(dataset, batch_size=1, shuffle=False)
 
 classes_keys = list(dog_class_dict.keys())
@@ -28,7 +31,7 @@ for img, l in loader:
                     saturation=1
         )
 
-        concept_dir = "/content/drive/MyDrive/test_dreambooth_synth/num_scales_10/200/dreambooth_new_prompts_dogs_aug/" + list(dataset.class_to_idx.keys())[l]
+        concept_dir = destination_path + list(dataset.class_to_idx.keys())[l]
         concept_path = os.path.join(concept_dir)
     
         if not os.path.exists(concept_path):
