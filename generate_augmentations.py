@@ -26,7 +26,9 @@ if __name__ == '__main__':
         os.mkdir(destination_path)
         j = 0
     else:
-        j = len(os.listdir(os.path.join(destination_path, os.listdir(destination_path)[0]))) - 1
+        num_classes = len(os.listdir(destination_path))
+        total_num_of_generated_images = sum([len(os.listdir(os.path.join(destination_path, os.listdir(destination_path)[i]))) for i in range(num_classes)])
+        j = total_num_of_generated_images - 1
 
     print(f"Generating augmentations for {path_to_imgs} and saving them to {destination_path}")
     t = transforms.ToPILImage()
