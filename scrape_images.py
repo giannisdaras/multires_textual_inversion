@@ -19,7 +19,7 @@ for model in tqdm(models_list):
 
   for i in range(MAX_IMAGES):
         url = f"https://huggingface.co/{model_id}/resolve/main/concept_images/{i}.jpeg"
-        image_download = requests.get(url)
+        image_download = requests.get(url, timeout=30)
         url_code = image_download.status_code
         if url_code == 200:
             file = open(os.path.join(model_dir, f"{i}.jpeg"), "wb") ## Creates the file for image
